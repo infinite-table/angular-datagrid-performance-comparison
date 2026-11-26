@@ -164,6 +164,18 @@ function isNotRendering(node: Node) {
   );
 }
 
+// An attribute written with the value it already had - e.g. a class added to
+// an element that has it (NG-ZORRO Table sets its scroll-position classes
+// again after every change of its rows). The DOM reports it as a mutation,
+// but nothing changes on screen, and no frame is committed for it.
+function isNoOpAttributeWrite(record: MutationRecord) {
+  return (
+    record.type === 'attributes' &&
+    record.attributeName != null &&
+    record.oldValue === (record.target as Element).getAttribute(record.attributeName)
+  );
+}
+
 function describeMutation(record: MutationRecord) {
   const target = record.target as Element;
   const cls =
@@ -282,7 +294,9 @@ function createBench(
       recent: [],
     };
     const observer = new MutationObserver((all) => {
-      const records = all.filter((r) => !isNotRendering(r.target));
+      const records = all.filter(
+        (r) => !isNotRendering(r.target) && !isNoOpAttributeWrite(r),
+      );
       if (!records.length) {
         return;
       }
@@ -298,6 +312,7 @@ function createBench(
       childList: true,
       characterData: true,
       attributes: true,
+      attributeOldValue: true,
     });
     activeSettle = { label, observer, info };
   }

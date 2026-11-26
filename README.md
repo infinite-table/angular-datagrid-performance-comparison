@@ -496,7 +496,9 @@ benchmark doesn't use it. The scheduled runs only look for new 21.x versions.
     content, at the right place
   - _settled_ - the first frame committed after the grid's last DOM mutation.
     We don't use js-framework-benchmark's "last rAF/timer" rule, because grids
-    schedule debounce timers that do no visible work.
+    schedule debounce timers that do no visible work. An attribute written
+    with the value it already had is not counted as a mutation: nothing
+    changes on screen, and no frame is committed for it.
 - **Scrolling uses real input**: `Input.synthesizeScrollGesture` (Chrome's
   input pipeline, threaded scrolling), the same gesture for every grid.
   - frame outcomes from the compositor's `PipelineReporter` trace events:
@@ -600,6 +602,9 @@ file. One more difference, in `harness.ts`: the rows the checks compare the
 grids with are a copy, made when the page loads, before anything is measured
 (the other two make it at the first live update) - PrimeNG Table sorts the
 array it is given in place, and the checks need the rows in their own order.
+And the "settled" tracking ignores attributes written with the value they
+already had: NG-ZORRO Table sets its scroll-position classes again after every
+change of its rows, which changes nothing and is followed by no frame.
 
 ## Help us make it fairer
 
