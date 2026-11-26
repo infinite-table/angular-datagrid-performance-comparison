@@ -6,16 +6,16 @@
  *
  * Env:
  *   EVENT_NAME      schedule | workflow_dispatch | repository_dispatch
- *   AG_GRID         version of ag-grid-vue3 + ag-grid-community ("" or "latest" = latest on npm)
- *   TANSTACK        version of @tanstack/vue-table (same)
- *   PRIMEVUE        version of primevue ("" or "latest" = latest 4.x on npm,
- *                   its `v4-stable` tag - see "License keys" in the README)
- *   ELEMENT_PLUS    version of element-plus (same)
- *   INFINITE        version of @infinite-table/infinite-vue (same)
+ *   INFINITE        version of @infinite-table/infinite-angular ("" or "latest" = latest on npm)
+ *   PRIMENG         version of primeng ("" or "latest" = latest 21.x on npm,
+ *                   its `v21-stable` tag - see "License keys" in the README)
+ *   AG_GRID         version of ag-grid-angular + ag-grid-community (same as INFINITE)
+ *   TANSTACK        version of @tanstack/angular-table (same)
+ *   NG_ZORRO        version of ng-zorro-antd (same)
  *   GH_TOKEN        to look for an open "benchmark failed" issue
  *
- * Outputs (GITHUB_OUTPUT): run, ag_grid, tanstack, primevue, element_plus,
- * infinite, newest, branch, title
+ * Outputs (GITHUB_OUTPUT): run, infinite, primeng, ag_grid, tanstack,
+ * ng_zorro, newest, branch, title
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -24,11 +24,11 @@ const pkg = JSON.parse(
   fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
 );
 const current = {
-  agGrid: pkg.dependencies['ag-grid-vue3'],
-  tanstack: pkg.dependencies['@tanstack/vue-table'],
-  primevue: pkg.dependencies['primevue'],
-  elementPlus: pkg.dependencies['element-plus'],
-  infinite: pkg.dependencies['@infinite-table/infinite-vue'],
+  infinite: pkg.dependencies['@infinite-table/infinite-angular'],
+  primeng: pkg.dependencies['primeng'],
+  agGrid: pkg.dependencies['ag-grid-angular'],
+  tanstack: pkg.dependencies['@tanstack/angular-table'],
+  ngZorro: pkg.dependencies['ng-zorro-antd'],
 };
 
 const scheduled = process.env.EVENT_NAME === 'schedule';
@@ -67,7 +67,7 @@ const compare = (a, b) => a.localeCompare(b, 'en', { numeric: true });
 
 // what a run is called: in its commit message and in its "failed" issue
 const describe = (v) =>
-  `TanStack Table ${v.tanstack}, AG Grid ${v.agGrid}, PrimeVue ${v.primevue}, Element Plus ${v.elementPlus}, Infinite Table ${v.infinite}`;
+  `Infinite Table ${v.infinite}, PrimeNG ${v.primeng}, AG Grid ${v.agGrid}, TanStack Table ${v.tanstack}, NG-ZORRO ${v.ngZorro}`;
 const failureTitle = (versions) => `Benchmark failed: ${describe(versions)}`;
 
 function hasOpenFailureIssue(title) {
@@ -95,21 +95,22 @@ function hasOpenFailureIssue(title) {
   return titles.split('\n').includes(title);
 }
 
-const agGrid = await resolve('ag-grid-vue3', process.env.AG_GRID);
-const tanstack = await resolve('@tanstack/vue-table', process.env.TANSTACK);
-// PrimeVue 5 asks for a license key, so the benchmark stays on the newest 4.x
-const PRIMEVUE_TAG = 'v4-stable';
-const wantedPrimevue = process.env.PRIMEVUE;
-const primevue = await resolve(
-  'primevue',
-  !wantedPrimevue || wantedPrimevue === 'latest' ? PRIMEVUE_TAG : wantedPrimevue,
-);
-const elementPlus = await resolve('element-plus', process.env.ELEMENT_PLUS);
 const infinite = await resolve(
-  '@infinite-table/infinite-vue',
+  '@infinite-table/infinite-angular',
   process.env.INFINITE,
 );
-const versions = { agGrid, tanstack, primevue, elementPlus, infinite };
+// PrimeNG 22 asks for a license key, so the benchmark stays on the newest
+// 21.x, the last MIT-licensed major version
+const PRIMENG_TAG = 'v21-stable';
+const wantedPrimeng = process.env.PRIMENG;
+const primeng = await resolve(
+  'primeng',
+  !wantedPrimeng || wantedPrimeng === 'latest' ? PRIMENG_TAG : wantedPrimeng,
+);
+const agGrid = await resolve('ag-grid-angular', process.env.AG_GRID);
+const tanstack = await resolve('@tanstack/angular-table', process.env.TANSTACK);
+const ngZorro = await resolve('ng-zorro-antd', process.env.NG_ZORRO);
+const versions = { infinite, primeng, agGrid, tanstack, ngZorro };
 const names = Object.keys(versions);
 let run = true;
 let reason = 'asked for';
@@ -146,13 +147,13 @@ console.log(
 );
 output({
   run,
+  infinite,
+  primeng,
   ag_grid: agGrid,
   tanstack,
-  primevue,
-  element_plus: elementPlus,
-  infinite,
+  ng_zorro: ngZorro,
   newest,
   // the same name as versionBranch() in scripts/update-results.ts
-  branch: `versions/ag-grid-${agGrid}_tanstack-${tanstack}_primevue-${primevue}_element-plus-${elementPlus}_infinite-${infinite}`,
+  branch: `versions/infinite-${infinite}_primeng-${primeng}_ag-grid-${agGrid}_tanstack-${tanstack}_ng-zorro-${ngZorro}`,
   title: describe(versions),
 });

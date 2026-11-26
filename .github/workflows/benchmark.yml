@@ -1,4 +1,5 @@
-# Runs the benchmark for new versions of the grids and publishes the results:
+# Runs the benchmark for new versions of the grids and publishes the results
+# (https://github.com/infinite-table/angular-datagrid-performance-comparison):
 #
 #  - every 6 hours it looks on npm for a new version of any of the five
 #    grids, and measures it
@@ -8,7 +9,7 @@
 #
 # The newest versions go to master: package.json, results/latest, the charts
 # and the summary in the README. Every measured set of versions also gets a
-# branch (versions/ag-grid-<v>_tanstack-<v>_primevue-<v>_element-plus-<v>_infinite-<v>)
+# branch (versions/infinite-<v>_primeng-<v>_ag-grid-<v>_tanstack-<v>_ng-zorro-<v>)
 # with the code, the lockfile and the full results of that run, and its rows
 # in the history table on master.
 name: Benchmark
@@ -20,20 +21,20 @@ on:
     types: [new-version]
   workflow_dispatch:
     inputs:
-      tanstack_version:
-        description: '@tanstack/vue-table version'
+      infinite_version:
+        description: '@infinite-table/infinite-angular version'
+        default: latest
+      primeng_version:
+        description: 'primeng version (latest = the newest 21.x)'
         default: latest
       ag_grid_version:
-        description: 'ag-grid-vue3 + ag-grid-community version'
+        description: 'ag-grid-angular + ag-grid-community version'
         default: latest
-      primevue_version:
-        description: 'primevue version (latest = the newest 4.x)'
+      tanstack_version:
+        description: '@tanstack/angular-table version'
         default: latest
-      element_plus_version:
-        description: 'element-plus version'
-        default: latest
-      infinite_version:
-        description: '@infinite-table/infinite-vue version'
+      ng_zorro_version:
+        description: 'ng-zorro-antd version'
         default: latest
       publish:
         description: 'Commit the results (off = only upload them as an artifact)'
@@ -64,11 +65,11 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       run: ${{ steps.versions.outputs.run }}
+      infinite: ${{ steps.versions.outputs.infinite }}
+      primeng: ${{ steps.versions.outputs.primeng }}
       ag_grid: ${{ steps.versions.outputs.ag_grid }}
       tanstack: ${{ steps.versions.outputs.tanstack }}
-      primevue: ${{ steps.versions.outputs.primevue }}
-      element_plus: ${{ steps.versions.outputs.element_plus }}
-      infinite: ${{ steps.versions.outputs.infinite }}
+      ng_zorro: ${{ steps.versions.outputs.ng_zorro }}
       newest: ${{ steps.versions.outputs.newest }}
       branch: ${{ steps.versions.outputs.branch }}
       title: ${{ steps.versions.outputs.title }}
@@ -76,16 +77,16 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
       - id: versions
         run: node scripts/check-versions.mjs
         env:
           EVENT_NAME: ${{ github.event_name }}
+          INFINITE: ${{ inputs.infinite_version || github.event.client_payload.infinite_version }}
+          PRIMENG: ${{ inputs.primeng_version || github.event.client_payload.primeng_version }}
           AG_GRID: ${{ inputs.ag_grid_version || github.event.client_payload.ag_grid_version }}
           TANSTACK: ${{ inputs.tanstack_version || github.event.client_payload.tanstack_version }}
-          PRIMEVUE: ${{ inputs.primevue_version || github.event.client_payload.primevue_version }}
-          ELEMENT_PLUS: ${{ inputs.element_plus_version || github.event.client_payload.element_plus_version }}
-          INFINITE: ${{ inputs.infinite_version || github.event.client_payload.infinite_version }}
+          NG_ZORRO: ${{ inputs.ng_zorro_version || github.event.client_payload.ng_zorro_version }}
           GH_TOKEN: ${{ github.token }}
 
   benchmark:
@@ -96,11 +97,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
+      INFINITE: ${{ needs.check.outputs.infinite }}
+      PRIMENG: ${{ needs.check.outputs.primeng }}
       AG_GRID: ${{ needs.check.outputs.ag_grid }}
       TANSTACK: ${{ needs.check.outputs.tanstack }}
-      PRIMEVUE: ${{ needs.check.outputs.primevue }}
-      ELEMENT_PLUS: ${{ needs.check.outputs.element_plus }}
-      INFINITE: ${{ needs.check.outputs.infinite }}
+      NG_ZORRO: ${{ needs.check.outputs.ng_zorro }}
       BRANCH: ${{ needs.check.outputs.branch }}
       TITLE: ${{ needs.check.outputs.title }}
       PUBLISH: ${{ github.event_name != 'workflow_dispatch' || inputs.publish }}
@@ -108,7 +109,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: Install
@@ -116,12 +117,12 @@ jobs:
         run: |
           npm ci
           npm install --save-exact \
+            "@infinite-table/infinite-angular@$INFINITE" \
+            "primeng@$PRIMENG" \
             "ag-grid-community@$AG_GRID" \
-            "ag-grid-vue3@$AG_GRID" \
-            "@tanstack/vue-table@$TANSTACK" \
-            "primevue@$PRIMEVUE" \
-            "element-plus@$ELEMENT_PLUS" \
-            "@infinite-table/infinite-vue@$INFINITE"
+            "ag-grid-angular@$AG_GRID" \
+            "@tanstack/angular-table@$TANSTACK" \
+            "ng-zorro-antd@$NG_ZORRO"
           npx playwright install chromium
 
       # Chromium's apt packages. The runner image already has its libraries
