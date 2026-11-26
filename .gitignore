@@ -1,0 +1,19 @@
+node_modules
+dist
+*.tsbuildinfo
+
+# results of local runs - see results/ for the published ones
+benchmark-results
+test-results
+playwright-report
+
+# local settings
+.env*
+
+.DS_Store
+
+# Angular
+.angular
+out-tsc
+# written before every build by scripts/write-env.mjs
+src/env.generated.ts

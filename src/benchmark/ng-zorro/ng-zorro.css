@@ -1,0 +1,4 @@
+/* NG-ZORRO's stylesheet, as its "Getting started" installs it - only on the
+   NG-ZORRO pages (a component stylesheet without encapsulation, loaded with
+   the page's chunk) */
+@import 'ng-zorro-antd/ng-zorro-antd.min.css';

@@ -1,0 +1,60 @@
+{
+  "name": "angular-datagrid-performance-comparison",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A reproducible benchmark comparing the Infinite Table, PrimeNG Table, AG Grid, TanStack Table and NG-ZORRO Table Angular DataGrids at 1,000,000 rows",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infinite-table/angular-datagrid-performance-comparison.git"
+  },
+  "scripts": {
+    "dev": "node scripts/write-env.mjs && ng serve",
+    "benchmark": "npm run benchmark:build && npm run benchmark:run",
+    "benchmark:build": "node scripts/write-env.mjs && ng build --configuration production",
+    "benchmark:run": "playwright test",
+    "benchmark:serve": "node scripts/serve.mjs",
+    "results": "node --no-warnings scripts/update-results.ts",
+    "typecheck": "node scripts/write-env.mjs && ngc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json"
+  },
+  "engines": {
+    "node": ">=22.22.3"
+  },
+  "dependencies": {
+    "@angular/cdk": "22.3.0",
+    "@angular/common": "22.3.0",
+    "@angular/compiler": "22.3.0",
+    "@angular/core": "22.3.0",
+    "@angular/forms": "22.3.0",
+    "@angular/platform-browser": "22.3.0",
+    "@angular/router": "22.3.0",
+    "@infinite-table/infinite-angular": "11.0.0",
+    "@primeuix/themes": "2.0.3",
+    "@tanstack/angular-table": "9.3.2",
+    "@tanstack/angular-virtual": "6.1.14",
+    "ag-grid-angular": "36.3.0",
+    "ag-grid-community": "36.3.0",
+    "ng-zorro-antd": "22.2.1",
+    "normalize.css": "8.0.1",
+    "primeng": "21.1.10",
+    "rxjs": "7.8.2",
+    "tslib": "2.9.1"
+  },
+  "devDependencies": {
+    "@angular/build": "22.3.0",
+    "@angular/cli": "22.3.0",
+    "@angular/compiler-cli": "22.3.0",
+    "@playwright/test": "1.52.0",
+    "@types/node": "22.18.8",
+    "typescript": "6.0.3"
+  },
+  "overrides": {
+    "primeng": {
+      "@angular/cdk": "$@angular/cdk",
+      "@angular/common": "$@angular/common",
+      "@angular/core": "$@angular/core",
+      "@angular/forms": "$@angular/forms",
+      "@angular/platform-browser": "$@angular/platform-browser",
+      "@angular/router": "$@angular/router"
+    }
+  }
+}

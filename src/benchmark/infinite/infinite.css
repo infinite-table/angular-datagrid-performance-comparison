@@ -1,0 +1,3 @@
+/* Infinite Table's stylesheet - only on the Infinite Table pages (a
+   component stylesheet without encapsulation, loaded with the page's chunk) */
+@import '@infinite-table/infinite-angular/index.css';

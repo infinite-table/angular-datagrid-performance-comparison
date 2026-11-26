@@ -1,0 +1,72 @@
+<div #scrollContainer class="container">
+  <!-- Even though we're still using semantic table tags, we must use CSS grid and flexbox for dynamic row heights -->
+  <table class="table">
+    <thead class="thead">
+      @for (headerGroup of table.getHeaderGroups(); track headerGroup.id) {
+        <tr class="tr" [style.height.px]="headerHeight">
+          @if (virtualPaddingLeft()) {
+            <!-- fake empty column to the left for virtualization scroll padding -->
+            <th class="th" [style.width.px]="virtualPaddingLeft()"></th>
+          }
+          @for (virtualColumn of virtualColumns(); track virtualColumn.key) {
+            @let header = headerGroup.headers[virtualColumn.index];
+            <th
+              class="th"
+              [attr.data-column-id]="header.column.id"
+              [style.width.px]="header.getSize()"
+            >
+              @if (!header.isPlaceholder) {
+                <div
+                  [class.sortable]="header.column.getCanSort()"
+                  (click)="header.column.getToggleSortingHandler()?.($event)"
+                >
+                  <ng-container *flexRenderHeader="header; let headerCell">
+                    {{ headerCell }}
+                  </ng-container>
+                  {{ sortIndicator(header.column.getIsSorted()) }}
+                </div>
+              }
+            </th>
+          }
+          @if (virtualPaddingRight()) {
+            <!-- fake empty column to the right for virtualization scroll padding -->
+            <th class="th" [style.width.px]="virtualPaddingRight()"></th>
+          }
+        </tr>
+      }
+    </thead>
+    <tbody class="tbody" [style.height.px]="totalSize()">
+      @for (virtualRow of virtualRows(); track virtualRow.key) {
+        @let row = rows()[virtualRow.index];
+        @let cells = row.getAllCells();
+        <tr
+          class="tr body-row"
+          [style.height.px]="rowHeight"
+          [style.transform]="'translateY(' + virtualRow.start + 'px)'"
+        >
+          @if (virtualPaddingLeft()) {
+            <!-- fake empty column to the left for virtualization scroll padding -->
+            <td class="td" [style.width.px]="virtualPaddingLeft()"></td>
+          }
+          @for (virtualColumn of virtualColumns(); track virtualColumn.key) {
+            @let cell = cells[virtualColumn.index];
+            <td
+              class="td"
+              [attr.data-row-index]="virtualRow.index"
+              [attr.data-column-id]="cell.column.id"
+              [style.width.px]="cell.column.getSize()"
+            >
+              <ng-container *flexRenderCell="cell; let renderCell">
+                {{ renderCell }}
+              </ng-container>
+            </td>
+          }
+          @if (virtualPaddingRight()) {
+            <!-- fake empty column to the right for virtualization scroll padding -->
+            <td class="td" [style.width.px]="virtualPaddingRight()"></td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
