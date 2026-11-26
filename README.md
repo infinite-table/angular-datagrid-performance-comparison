@@ -598,13 +598,7 @@ results script are the ones of the
 [React](https://github.com/infinite-table/datagrid-performance-comparison)
 and [Vue](https://github.com/infinite-table/vue-datagrid-performance-comparison)
 benchmarks, with the list of grids changed - they can be compared file by
-file. One more difference, in `harness.ts`: the rows the checks compare the
-grids with are a copy, made when the page loads, before anything is measured
-(the other two make it at the first live update) - PrimeNG Table sorts the
-array it is given in place, and the checks need the rows in their own order.
-And the "settled" tracking ignores attributes written with the value they
-already had: NG-ZORRO Table sets its scroll-position classes again after every
-change of its rows, which changes nothing and is followed by no frame.
+file.
 
 ## Help us make it fairer
 
