@@ -51,8 +51,126 @@ whole thing is here for you to run.
 
 ## Results
 
-No published results yet - the first run of the
-[Benchmark workflow](./.github/workflows/benchmark.yml) puts them here.
+**Infinite Table for Angular 11.0.0**, **PrimeNG Table 21.1.10**, **AG Grid Angular 36.3.0** (Community), **TanStack Table 9.3.2** (with TanStack Virtual 6.1.14) and **NG-ZORRO Table 22.2.1** - measured on 2026-11-26, on GitHub Actions, ubuntu-24.04 (AMD EPYC 7763 64-Core Processor × 4), in Chrome 136.0.7103.25 (headless). Every value is the median of 5 runs.
+
+The absolute numbers depend on the machine - compare the grids, not the milliseconds. In the table under the charts, a difference is only called when the 95% confidence interval excludes "no difference".
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/at-a-glance-dark.svg">
+  <img src="results/latest/charts/at-a-glance-light.svg" width="760" alt="At a glance - 1,000,000 rows (lower is better). Mount: first rows painted: Infinite Table 589 ms, PrimeNG Table 125 ms, AG Grid 948 ms, TanStack Table 866 ms, NG-ZORRO Table 119 ms; Sort a string column: Infinite Table 1,773 ms, PrimeNG Table 1,591 ms, AG Grid 3,465 ms, TanStack Table 4,280 ms, NG-ZORRO Table 1,407 ms; Sort a number column: Infinite Table 656 ms, PrimeNG Table 1,339 ms, AG Grid 2,959 ms, TanStack Table 3,565 ms, NG-ZORRO Table 903 ms.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/mount-dark.svg">
+  <img src="results/latest/charts/mount-light.svg" width="760" alt="Mount time (lower is better). First rows painted, 1M rows: Infinite Table 589 ms, PrimeNG Table 125 ms, AG Grid 948 ms, TanStack Table 866 ms, NG-ZORRO Table 119 ms; Settled (no more DOM changes), 1M rows: Infinite Table 629 ms, PrimeNG Table 125 ms, AG Grid 1,053 ms, TanStack Table 866 ms, NG-ZORRO Table 161 ms.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/memory-dark.svg">
+  <img src="results/latest/charts/memory-light.svg" width="760" alt="Memory: JavaScript heap retained by the grid (lower is better). 1M rows: Infinite Table 90.6 MB, PrimeNG Table 2.15 MB, AG Grid 212 MB, TanStack Table 288 MB, NG-ZORRO Table 14.2 MB.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/sort-1m-dark.svg">
+  <img src="results/latest/charts/sort-1m-light.svg" width="760" alt="Sorting 1,000,000 rows: click to sorted rows painted (lower is better). String column, ascending: Infinite Table 1,773 ms, PrimeNG Table 1,591 ms, AG Grid 3,465 ms, TanStack Table 4,280 ms, NG-ZORRO Table 1,407 ms; String column, descending: Infinite Table 1,817 ms, PrimeNG Table 348 ms, AG Grid 3,460 ms, TanStack Table 4,108 ms, NG-ZORRO Table 1,424 ms; Number column, ascending: Infinite Table 656 ms, PrimeNG Table 1,339 ms, AG Grid 2,959 ms, TanStack Table 3,565 ms, NG-ZORRO Table 903 ms; Number column, descending: Infinite Table 642 ms, PrimeNG Table 503 ms, AG Grid 3,021 ms, TanStack Table 3,290 ms, NG-ZORRO Table 925 ms.">
+</picture>
+
+The string column is lowercase a-z text, sorted in an `en-US` browser. The grids do not compare strings the same way - see [String sorting](#string-sorting). NG-ZORRO Table sorts with the compare function the page gives each column, as in its documentation - see [NG-ZORRO Table](#ng-zorro-table-the-virtual-scroll-and-the-pages-comparators).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/scroll-jump-dark.svg">
+  <img src="results/latest/charts/scroll-jump-light.svg" width="760" alt="Jumping to a far-away scroll position (lower is better). 1M rows: Infinite Table 43 ms, PrimeNG Table 52 ms, AG Grid 34.5 ms, TanStack Table 29.3 ms, NG-ZORRO Table 23.1 ms.">
+</picture>
+
+With 1M rows, the last row that can be scrolled to is not the last row of the data in: PrimeNG Table (row 838,881), TanStack Table (row 838,860), NG-ZORRO Table (row 838,861). Infinite Table and AG Grid reach the last row. See [Scroll range](#scroll-range).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/scroll-frames-dark.svg">
+  <img src="results/latest/charts/scroll-frames-light.svg" width="760" alt="Vertical scrolling: frames fully presented (higher is better). 1M rows: Infinite Table 81%, PrimeNG Table 54.3%, AG Grid 49.6%, TanStack Table 49.9%, NG-ZORRO Table 56.9%.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/scroll-vertical-work-dark.svg">
+  <img src="results/latest/charts/scroll-vertical-work-light.svg" width="760" alt="Vertical scrolling, 1M rows: main-thread work (lower is better). Layout: Infinite Table 83.2 ms, PrimeNG Table 187 ms, AG Grid 509 ms, TanStack Table 99.7 ms, NG-ZORRO Table 224 ms; Style recalculation: Infinite Table 307 ms, PrimeNG Table 230 ms, AG Grid 162 ms, TanStack Table 49.5 ms, NG-ZORRO Table 285 ms; All tasks: Infinite Table 1,897 ms, PrimeNG Table 1,704 ms, AG Grid 1,871 ms, TanStack Table 1,297 ms, NG-ZORRO Table 1,702 ms.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/scroll-horizontal-work-dark.svg">
+  <img src="results/latest/charts/scroll-horizontal-work-light.svg" width="760" alt="Horizontal scrolling, 1M rows: main-thread work (lower is better). Layout: Infinite Table 10.6 ms, PrimeNG Table 0 ms, AG Grid 75.4 ms, TanStack Table 48.8 ms, NG-ZORRO Table 0 ms; Style recalculation: Infinite Table 26.6 ms, PrimeNG Table 0 ms, AG Grid 43.7 ms, TanStack Table 14.6 ms, NG-ZORRO Table 2.88 ms; All tasks: Infinite Table 374 ms, PrimeNG Table 257 ms, AG Grid 491 ms, TanStack Table 528 ms, NG-ZORRO Table 198 ms.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/updates-low-1m-dark.svg">
+  <img src="results/latest/charts/updates-low-1m-light.svg" width="760" alt="Live updates, 1,000,000 rows: update to rows painted (lower is better). Rows as they are: Infinite Table 346 ms, PrimeNG Table 30 ms, AG Grid 96.6 ms, TanStack Table 605 ms, NG-ZORRO Table 37.3 ms; Sorted by the salary, which the updates change: Infinite Table 586 ms, PrimeNG Table 1,654 ms, AG Grid 3,739 ms, TanStack Table 4,191 ms, NG-ZORRO Table 1,338 ms; Filtered on the salary: Infinite Table 313 ms, PrimeNG Table 90.5 ms, AG Grid 347 ms, TanStack Table 1,976 ms, NG-ZORRO Table 61.3 ms; Grouped by department, salaries summed: Infinite Table 1,068 ms, TanStack Table 1,967 ms.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/updates-high-1m-dark.svg">
+  <img src="results/latest/charts/updates-high-1m-light.svg" width="760" alt="A feed of 50 updates a second, 1,000,000 rows: lag at the end (lower is better). Rows as they are: Infinite Table 505 ms, PrimeNG Table 58.5 ms, AG Grid 120 ms, TanStack Table 983 ms, NG-ZORRO Table 51.3 ms; Sorted by the salary, which the updates change: Infinite Table 865 ms, PrimeNG Table 2,888 ms, AG Grid 7,555 ms, TanStack Table 4,978 ms, NG-ZORRO Table 1,546 ms; Filtered on the salary: Infinite Table 359 ms, PrimeNG Table 160 ms, AG Grid 526 ms, TanStack Table 2,893 ms, NG-ZORRO Table 80.2 ms; Grouped by department, salaries summed: Infinite Table 1,667 ms, TanStack Table 2,415 ms.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/updates-high-fps-1m-dark.svg">
+  <img src="results/latest/charts/updates-high-fps-1m-light.svg" width="760" alt="A feed of 50 updates a second, 1,000,000 rows: frame rate (higher is better). Rows as they are: Infinite Table 2.68 fps, PrimeNG Table 32 fps, AG Grid 9.85 fps, TanStack Table 1.41 fps, NG-ZORRO Table 27.4 fps; Sorted by the salary, which the updates change: Infinite Table 1.46 fps, PrimeNG Table 0.58 fps, AG Grid 0.17 fps, TanStack Table 0.22 fps, NG-ZORRO Table 0.72 fps; Filtered on the salary: Infinite Table 3 fps, PrimeNG Table 10.6 fps, AG Grid 2.62 fps, TanStack Table 0.58 fps, NG-ZORRO Table 16.7 fps; Grouped by department, salaries summed: Infinite Table 0.89 fps, TanStack Table 0.47 fps.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/latest/charts/updates-high-work-1m-dark.svg">
+  <img src="results/latest/charts/updates-high-work-1m-light.svg" width="760" alt="A feed of 50 updates a second, 1,000,000 rows: main-thread work (lower is better). Rows as they are: Infinite Table 4,487 ms, PrimeNG Table 4,036 ms, AG Grid 4,099 ms, TanStack Table 4,983 ms, NG-ZORRO Table 4,029 ms; Sorted by the salary, which the updates change: Infinite Table 4,847 ms, PrimeNG Table 6,869 ms, AG Grid 11,543 ms, TanStack Table 8,959 ms, NG-ZORRO Table 5,527 ms; Filtered on the salary: Infinite Table 4,343 ms, PrimeNG Table 4,155 ms, AG Grid 4,507 ms, TanStack Table 6,875 ms, NG-ZORRO Table 4,058 ms; Grouped by department, salaries summed: Infinite Table 5,711 ms, TanStack Table 6,396 ms.">
+</picture>
+
+<details>
+<summary>The same numbers, as a table - and how Infinite Table compares with each grid</summary>
+
+| | Infinite Table | PrimeNG Table | AG Grid | TanStack Table | NG-ZORRO Table | Infinite Table vs each grid |
+|---|---:|---:|---:|---:|---:|---|
+| Mount - First rows painted, 1M rows | 589 ms | 125 ms | 948 ms | 866 ms | 119 ms | vs PrimeNG Table: **PrimeNG Table** 4.71× lower<br>vs AG Grid: **Infinite Table** 38% lower<br>vs TanStack Table: **Infinite Table** 32% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 4.96× lower |
+| Mount - Settled (no more DOM changes), 1M rows | 629 ms | 125 ms | 1,053 ms | 866 ms | 161 ms | vs PrimeNG Table: **PrimeNG Table** 5.03× lower<br>vs AG Grid: **Infinite Table** 40% lower<br>vs TanStack Table: **Infinite Table** 27% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 3.91× lower |
+| Memory - 1M rows | 90.6 MB | 2.15 MB | 212 MB | 288 MB | 14.2 MB | vs PrimeNG Table: **PrimeNG Table** 42.1× lower<br>vs AG Grid: **Infinite Table** 2.34× lower<br>vs TanStack Table: **Infinite Table** 3.18× lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 6.38× lower |
+| Sort, 1M rows - String column, ascending | 1,773 ms | 1,591 ms | 3,465 ms | 4,280 ms | 1,407 ms | vs PrimeNG Table: **PrimeNG Table** 10% lower<br>vs AG Grid: **Infinite Table** 49% lower<br>vs TanStack Table: **Infinite Table** 2.41× lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 21% lower |
+| Sort, 1M rows - String column, descending | 1,817 ms | 348 ms | 3,460 ms | 4,108 ms | 1,424 ms | vs PrimeNG Table: **PrimeNG Table** 5.22× lower<br>vs AG Grid: **Infinite Table** 47% lower<br>vs TanStack Table: **Infinite Table** 2.26× lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 22% lower |
+| Sort, 1M rows - Number column, ascending | 656 ms | 1,339 ms | 2,959 ms | 3,565 ms | 903 ms | vs PrimeNG Table: **Infinite Table** 2.04× lower<br>vs AG Grid: **Infinite Table** 4.51× lower<br>vs TanStack Table: **Infinite Table** 5.43× lower<br>vs NG-ZORRO Table: **Infinite Table** 27% lower |
+| Sort, 1M rows - Number column, descending | 642 ms | 503 ms | 3,021 ms | 3,290 ms | 925 ms | vs PrimeNG Table: **PrimeNG Table** 22% lower<br>vs AG Grid: **Infinite Table** 4.7× lower<br>vs TanStack Table: **Infinite Table** 5.12× lower<br>vs NG-ZORRO Table: **Infinite Table** 31% lower |
+| Jump to rows painted - 1M rows | 43 ms | 52 ms | 34.5 ms | 29.3 ms | 23.1 ms | vs PrimeNG Table: **Infinite Table** 17% lower<br>vs AG Grid: **AG Grid** 20% lower<br>vs TanStack Table: **TanStack Table** 32% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 46% lower |
+| Vertical scrolling, frames fully presented - 1M rows | 81% | 54.3% | 49.6% | 49.9% | 56.9% | vs PrimeNG Table: **Infinite Table** 26.7 points higher<br>vs AG Grid: **Infinite Table** 31.5 points higher<br>vs TanStack Table: **Infinite Table** 31.2 points higher<br>vs NG-ZORRO Table: **Infinite Table** 24.2 points higher |
+| Vertical scrolling, 1M rows, main-thread work - Layout | 83.2 ms | 187 ms | 509 ms | 99.7 ms | 224 ms | vs PrimeNG Table: **Infinite Table** 2.24× lower<br>vs AG Grid: **Infinite Table** 6.12× lower<br>vs TanStack Table: **Infinite Table** 16% lower<br>vs NG-ZORRO Table: **Infinite Table** 2.69× lower |
+| Vertical scrolling, 1M rows, main-thread work - Style recalculation | 307 ms | 230 ms | 162 ms | 49.5 ms | 285 ms | vs PrimeNG Table: **PrimeNG Table** 25% lower<br>vs AG Grid: **AG Grid** 47% lower<br>vs TanStack Table: **TanStack Table** 6.2× lower<br>vs NG-ZORRO Table: no significant difference |
+| Vertical scrolling, 1M rows, main-thread work - All tasks | 1,897 ms | 1,704 ms | 1,871 ms | 1,297 ms | 1,702 ms | vs PrimeNG Table: **PrimeNG Table** 10% lower<br>vs AG Grid: no significant difference<br>vs TanStack Table: **TanStack Table** 32% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 10% lower |
+| Horizontal scrolling, 1M rows, main-thread work - Layout | 10.6 ms | 0 ms | 75.4 ms | 48.8 ms | 0 ms | vs PrimeNG Table: **PrimeNG Table** 100% lower<br>vs AG Grid: **Infinite Table** 7.13× lower<br>vs TanStack Table: **Infinite Table** 4.61× lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 100% lower |
+| Horizontal scrolling, 1M rows, main-thread work - Style recalculation | 26.6 ms | 0 ms | 43.7 ms | 14.6 ms | 2.88 ms | vs PrimeNG Table: **PrimeNG Table** 100% lower<br>vs AG Grid: **Infinite Table** 39% lower<br>vs TanStack Table: **TanStack Table** 45% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 9.23× lower |
+| Horizontal scrolling, 1M rows, main-thread work - All tasks | 374 ms | 257 ms | 491 ms | 528 ms | 198 ms | vs PrimeNG Table: **PrimeNG Table** 31% lower<br>vs AG Grid: **Infinite Table** 24% lower<br>vs TanStack Table: **Infinite Table** 29% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 47% lower |
+| Live updates, 1M rows - Rows as they are | 346 ms | 30 ms | 96.6 ms | 605 ms | 37.3 ms | vs PrimeNG Table: **PrimeNG Table** 11.5× lower<br>vs AG Grid: **AG Grid** 3.58× lower<br>vs TanStack Table: **Infinite Table** 43% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 9.26× lower |
+| Live updates, 1M rows - Sorted by the salary, which the updates change | 586 ms | 1,654 ms | 3,739 ms | 4,191 ms | 1,338 ms | vs PrimeNG Table: **Infinite Table** 2.82× lower<br>vs AG Grid: **Infinite Table** 6.38× lower<br>vs TanStack Table: **Infinite Table** 7.15× lower<br>vs NG-ZORRO Table: **Infinite Table** 2.28× lower |
+| Live updates, 1M rows - Filtered on the salary | 313 ms | 90.5 ms | 347 ms | 1,976 ms | 61.3 ms | vs PrimeNG Table: **PrimeNG Table** 3.46× lower<br>vs AG Grid: **Infinite Table** 10% lower<br>vs TanStack Table: **Infinite Table** 6.32× lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 5.1× lower |
+| Live updates, 1M rows - Grouped by department, salaries summed | 1,068 ms | – | – | 1,967 ms | – | vs TanStack Table: **Infinite Table** 46% lower |
+| A feed of 50 updates a second, 1M rows, lag at the end - Rows as they are | 505 ms | 58.5 ms | 120 ms | 983 ms | 51.3 ms | vs PrimeNG Table: **PrimeNG Table** 8.63× lower<br>vs AG Grid: **AG Grid** 4.21× lower<br>vs TanStack Table: **Infinite Table** 49% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 9.84× lower |
+| A feed of 50 updates a second, 1M rows, lag at the end - Sorted by the salary, which the updates change | 865 ms | 2,888 ms | 7,555 ms | 4,978 ms | 1,546 ms | vs PrimeNG Table: **Infinite Table** 3.34× lower<br>vs AG Grid: **Infinite Table** 8.73× lower<br>vs TanStack Table: **Infinite Table** 5.76× lower<br>vs NG-ZORRO Table: **Infinite Table** 44% lower |
+| A feed of 50 updates a second, 1M rows, lag at the end - Filtered on the salary | 359 ms | 160 ms | 526 ms | 2,893 ms | 80.2 ms | vs PrimeNG Table: **PrimeNG Table** 2.24× lower<br>vs AG Grid: no significant difference<br>vs TanStack Table: **Infinite Table** 8.05× lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 4.48× lower |
+| A feed of 50 updates a second, 1M rows, lag at the end - Grouped by department, salaries summed | 1,667 ms | – | – | 2,415 ms | – | vs TanStack Table: **Infinite Table** 31% lower |
+| A feed of 50 updates a second, 1M rows, frame rate - Rows as they are | 2.68 fps | 32 fps | 9.85 fps | 1.41 fps | 27.4 fps | vs PrimeNG Table: **PrimeNG Table** 12× higher<br>vs AG Grid: **AG Grid** 3.68× higher<br>vs TanStack Table: **Infinite Table** 90% higher<br>vs NG-ZORRO Table: **NG-ZORRO Table** 10.3× higher |
+| A feed of 50 updates a second, 1M rows, frame rate - Sorted by the salary, which the updates change | 1.46 fps | 0.58 fps | 0.17 fps | 0.22 fps | 0.72 fps | vs PrimeNG Table: **Infinite Table** 2.5× higher<br>vs AG Grid: **Infinite Table** 8.4× higher<br>vs TanStack Table: **Infinite Table** 6.52× higher<br>vs NG-ZORRO Table: **Infinite Table** 2.01× higher |
+| A feed of 50 updates a second, 1M rows, frame rate - Filtered on the salary | 3 fps | 10.6 fps | 2.62 fps | 0.58 fps | 16.7 fps | vs PrimeNG Table: **PrimeNG Table** 3.53× higher<br>vs AG Grid: **Infinite Table** 14% higher<br>vs TanStack Table: **Infinite Table** 5.15× higher<br>vs NG-ZORRO Table: **NG-ZORRO Table** 5.59× higher |
+| A feed of 50 updates a second, 1M rows, frame rate - Grouped by department, salaries summed | 0.89 fps | – | – | 0.47 fps | – | vs TanStack Table: **Infinite Table** 89% higher |
+| A feed of 50 updates a second, 1M rows, main-thread work - Rows as they are | 4,487 ms | 4,036 ms | 4,099 ms | 4,983 ms | 4,029 ms | vs PrimeNG Table: **PrimeNG Table** 10% lower<br>vs AG Grid: **AG Grid** 9% lower<br>vs TanStack Table: **Infinite Table** 10% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 10% lower |
+| A feed of 50 updates a second, 1M rows, main-thread work - Sorted by the salary, which the updates change | 4,847 ms | 6,869 ms | 11,543 ms | 8,959 ms | 5,527 ms | vs PrimeNG Table: **Infinite Table** 29% lower<br>vs AG Grid: **Infinite Table** 2.38× lower<br>vs TanStack Table: **Infinite Table** 46% lower<br>vs NG-ZORRO Table: **Infinite Table** 12% lower |
+| A feed of 50 updates a second, 1M rows, main-thread work - Filtered on the salary | 4,343 ms | 4,155 ms | 4,507 ms | 6,875 ms | 4,058 ms | vs PrimeNG Table: **PrimeNG Table** 4% lower<br>vs AG Grid: no significant difference<br>vs TanStack Table: **Infinite Table** 37% lower<br>vs NG-ZORRO Table: **NG-ZORRO Table** 7% lower |
+| A feed of 50 updates a second, 1M rows, main-thread work - Grouped by department, salaries summed | 5,711 ms | – | – | 6,396 ms | – | vs TanStack Table: **Infinite Table** 11% lower |
+
+</details>
+
+Every metric of every scenario, with standard deviations and confidence intervals: [full report](./results/latest/report.md) · [raw samples](./results/latest/results.json).
+
+## History
+
+Every set of versions measured so far, newest first, with a row for each grid. All the values are times in ms, except memory, in MB - lower is better. Runs measured on different machines can't be compared in absolute terms (hosted runners don't all have the same CPU) - compare how the grids relate within a run. The branch of a run has the code, the lockfile and the full results of that run.
+
+| Run | Grid | Mount 1M | Sort string 1M | Sort number 1M | Memory 1M | Vertical scroll work 1M | Horizontal scroll work 1M | Update sorted 1M | Feed lag sorted 1M |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2026-11-26<br>GitHub Actions, ubuntu-24.04 · AMD EPYC 7763 64-Core Processor × 4<br>[branch](https://github.com/infinite-table/angular-datagrid-performance-comparison/tree/versions/infinite-11.0.0_primeng-21.1.10_ag-grid-36.3.0_tanstack-9.3.2_ng-zorro-22.2.1) | Infinite Table 11.0.0 | 589 | 1,773 | 656 | 90.6 | 1,897 | 374 | 586 | 865 |
+|  | PrimeNG Table 21.1.10 | 125 | 1,591 | 1,339 | 2.15 | 1,704 | 257 | 1,654 | 2,888 |
+|  | AG Grid 36.3.0 | 948 | 3,465 | 2,959 | 212 | 1,871 | 491 | 3,739 | 7,555 |
+|  | TanStack Table 9.3.2 | 866 | 4,280 | 3,565 | 288 | 1,297 | 528 | 4,191 | 4,978 |
+|  | NG-ZORRO Table 22.2.1 | 119 | 1,407 | 903 | 14.2 | 1,702 | 198 | 1,338 | 1,546 |
 
 <!-- results:end -->
 
