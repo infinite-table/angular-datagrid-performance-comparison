@@ -52,6 +52,9 @@ const salaryFilters: NzTableFilterList = [
     byDefault: true,
   },
 ];
+// the other columns: no filter (always the same array - a new one would be
+// a change of the input, and NG-ZORRO would filter and sort the rows again)
+const noFilters: NzTableFilterList = [];
 const salaryFilterFn: NzTableFilterFn<BenchRow> = (min: number, row) =>
   row[BENCH_FILTER_FIELD] >= min;
 
@@ -180,7 +183,7 @@ export class NgZorroGrid implements OnInit {
   protected filters(column: BenchColumn) {
     return this.view() === 'filtered' && column.field === BENCH_FILTER_FIELD
       ? salaryFilters
-      : [];
+      : noFilters;
   }
 
   protected filterFn(column: BenchColumn) {

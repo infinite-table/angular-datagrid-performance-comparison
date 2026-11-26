@@ -183,10 +183,13 @@ function createBench(
 ) {
   let frameRecorder: { stop(): FrameRecord } | null = null;
   /**
-   * the rows as they are now, by id - `data` until the first update, then a
-   * copy that the updates change. The checks compare the grid with it
+   * the rows as they are now, by id - a copy of `data`, which the updates
+   * change. The checks compare the grid with it. A copy from the start, made
+   * before anything is measured, because a grid may reorder the array it is
+   * given: PrimeNG Table sorts it in place. (The React and Vue benchmarks
+   * copy it at the first update.)
    */
-  let truth = data;
+  const truth = data.slice();
   let plan: UpdatePlan | null = null;
   let probe: { stop(): ProbeFrame[] } | null = null;
   let checksum: string | null = null;
@@ -622,9 +625,6 @@ function createBench(
      * works out what the grid shows after each of them.
      */
     prepareUpdates(batches: number, rowsPerBatch: number, seed = 7) {
-      if (truth === data) {
-        truth = data.slice();
-      }
       const random = createRandom(seed);
       const rows = truth.slice();
       const count = rows.length;
@@ -1028,7 +1028,7 @@ function createBench(
             const text = cellText(hit.cell);
             // a few px of slack for the rounding of stretched scrolling
             const isRight = [rowAt(y), rowAt(y - 3), rowAt(y + 3)].some(
-              (r) => r >= 0 && r < data.length && text === String(data[r].id),
+              (r) => r >= 0 && r < truth.length && text === String(truth[r].id),
             );
             if (isRight) {
               ok++;
@@ -1036,7 +1036,7 @@ function createBench(
               wrong++;
               if (!firstWrong) {
                 firstWrong = `y=${Math.round(y - bodyRect.top)} expected id ${
-                  data[rowAt(y)]?.id
+                  truth[rowAt(y)]?.id
                 }, got ${text}`;
               }
             }
@@ -1067,7 +1067,7 @@ function createBench(
             } else if (
               column &&
               adapter.getCellColumnId(hit.cell) === column.field &&
-              cellText(hit.cell) === String(data[rowIndex][column.field])
+              cellText(hit.cell) === String(truth[rowIndex][column.field])
             ) {
               ok++;
             } else {
