@@ -5,53 +5,53 @@
 <text x="20" y="56" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#6b6a66">total over the wheel gesture · ms · lower is better</text>
 <text x="20" y="90" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#52514e">Layout</text>
 <text x="20" y="109.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">Infinite Table</text>
-<path d="M172,98H188.1a4,4 0 0 1 4,4V108a4,4 0 0 1 -4,4H172Z" fill="#2a78d6"/>
-<text x="200" y="109.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">83.2 ms</text>
+<path d="M172,98H190.5a4,4 0 0 1 4,4V108a4,4 0 0 1 -4,4H172Z" fill="#2a78d6"/>
+<text x="202" y="109.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">69.6 ms</text>
 <text x="20" y="127.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">PrimeNG Table</text>
-<path d="M172,116H213.1a4,4 0 0 1 4,4V126a4,4 0 0 1 -4,4H172Z" fill="#eb6834"/>
-<text x="225" y="127.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">187 ms</text>
+<path d="M172,116H207a4,4 0 0 1 4,4V126a4,4 0 0 1 -4,4H172Z" fill="#eb6834"/>
+<text x="219" y="127.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">121 ms</text>
 <text x="20" y="145.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">AG Grid</text>
-<path d="M172,134H290.9a4,4 0 0 1 4,4V144a4,4 0 0 1 -4,4H172Z" fill="#1baf7a"/>
-<text x="303" y="145.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">509 ms</text>
+<path d="M172,134H279.5a4,4 0 0 1 4,4V144a4,4 0 0 1 -4,4H172Z" fill="#1baf7a"/>
+<text x="291" y="145.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">346 ms</text>
 <text x="20" y="163.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">TanStack Table</text>
-<path d="M172,152H192.1a4,4 0 0 1 4,4V162a4,4 0 0 1 -4,4H172Z" fill="#eda100"/>
-<text x="204" y="163.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">99.7 ms</text>
+<path d="M172,152H191.9a4,4 0 0 1 4,4V162a4,4 0 0 1 -4,4H172Z" fill="#eda100"/>
+<text x="204" y="163.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">74.2 ms</text>
 <text x="20" y="181.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">NG-ZORRO Table</text>
-<path d="M172,170H222.1a4,4 0 0 1 4,4V180a4,4 0 0 1 -4,4H172Z" fill="#a064d8"/>
-<text x="234" y="181.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">224 ms</text>
+<path d="M172,170H219.7a4,4 0 0 1 4,4V180a4,4 0 0 1 -4,4H172Z" fill="#a064d8"/>
+<text x="232" y="181.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">160 ms</text>
 <line x1="171.5" y1="96" x2="171.5" y2="186" stroke="#c3c2b7" stroke-width="1"/>
 <text x="20" y="214" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#52514e">Style recalculation</text>
 <text x="20" y="233.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">Infinite Table</text>
-<path d="M172,222H242.1a4,4 0 0 1 4,4V232a4,4 0 0 1 -4,4H172Z" fill="#2a78d6"/>
-<text x="254" y="233.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">307 ms</text>
+<path d="M172,222H236.3a4,4 0 0 1 4,4V232a4,4 0 0 1 -4,4H172Z" fill="#2a78d6"/>
+<text x="248" y="233.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">212 ms</text>
 <text x="20" y="251.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">PrimeNG Table</text>
-<path d="M172,240H223.5a4,4 0 0 1 4,4V250a4,4 0 0 1 -4,4H172Z" fill="#eb6834"/>
-<text x="236" y="251.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">230 ms</text>
+<path d="M172,240H219.9a4,4 0 0 1 4,4V250a4,4 0 0 1 -4,4H172Z" fill="#eb6834"/>
+<text x="232" y="251.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">161 ms</text>
 <text x="20" y="269.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">AG Grid</text>
-<path d="M172,258H207.1a4,4 0 0 1 4,4V268a4,4 0 0 1 -4,4H172Z" fill="#1baf7a"/>
-<text x="219" y="269.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">162 ms</text>
+<path d="M172,258H203.5a4,4 0 0 1 4,4V268a4,4 0 0 1 -4,4H172Z" fill="#1baf7a"/>
+<text x="216" y="269.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">110 ms</text>
 <text x="20" y="287.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">TanStack Table</text>
 <path d="M172,276H179.9a4,4 0 0 1 4,4V286a4,4 0 0 1 -4,4H172Z" fill="#eda100"/>
-<text x="192" y="287.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">49.5 ms</text>
+<text x="192" y="287.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">36.8 ms</text>
 <text x="20" y="305.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">NG-ZORRO Table</text>
-<path d="M172,294H236.8a4,4 0 0 1 4,4V304a4,4 0 0 1 -4,4H172Z" fill="#a064d8"/>
-<text x="249" y="305.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">285 ms</text>
+<path d="M172,294H233a4,4 0 0 1 4,4V304a4,4 0 0 1 -4,4H172Z" fill="#a064d8"/>
+<text x="245" y="305.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">201 ms</text>
 <line x1="171.5" y1="220" x2="171.5" y2="310" stroke="#c3c2b7" stroke-width="1"/>
 <text x="20" y="338" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#52514e">All tasks</text>
 <text x="20" y="357.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">Infinite Table</text>
 <path d="M172,346H626a4,4 0 0 1 4,4V356a4,4 0 0 1 -4,4H172Z" fill="#2a78d6"/>
-<text x="638" y="357.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,897 ms</text>
+<text x="638" y="357.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,420 ms</text>
 <text x="20" y="375.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">PrimeNG Table</text>
-<path d="M172,364H579.3a4,4 0 0 1 4,4V374a4,4 0 0 1 -4,4H172Z" fill="#eb6834"/>
-<text x="591" y="375.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,704 ms</text>
+<path d="M172,364H585.9a4,4 0 0 1 4,4V374a4,4 0 0 1 -4,4H172Z" fill="#eb6834"/>
+<text x="598" y="375.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,295 ms</text>
 <text x="20" y="393.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">AG Grid</text>
-<path d="M172,382H619.8a4,4 0 0 1 4,4V392a4,4 0 0 1 -4,4H172Z" fill="#1baf7a"/>
-<text x="632" y="393.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,871 ms</text>
+<path d="M172,382H625.4a4,4 0 0 1 4,4V392a4,4 0 0 1 -4,4H172Z" fill="#1baf7a"/>
+<text x="637" y="393.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,418 ms</text>
 <text x="20" y="411.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">TanStack Table</text>
-<path d="M172,400H481.1a4,4 0 0 1 4,4V410a4,4 0 0 1 -4,4H172Z" fill="#eda100"/>
-<text x="493" y="411.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,297 ms</text>
+<path d="M172,400H481.4a4,4 0 0 1 4,4V410a4,4 0 0 1 -4,4H172Z" fill="#eda100"/>
+<text x="493" y="411.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">972 ms</text>
 <text x="20" y="429.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#52514e">NG-ZORRO Table</text>
-<path d="M172,418H578.9a4,4 0 0 1 4,4V428a4,4 0 0 1 -4,4H172Z" fill="#a064d8"/>
-<text x="591" y="429.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,702 ms</text>
+<path d="M172,418H591.4a4,4 0 0 1 4,4V428a4,4 0 0 1 -4,4H172Z" fill="#a064d8"/>
+<text x="603" y="429.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#0b0b0b">1,313 ms</text>
 <line x1="171.5" y1="344" x2="171.5" y2="434" stroke="#c3c2b7" stroke-width="1"/>
 </svg>

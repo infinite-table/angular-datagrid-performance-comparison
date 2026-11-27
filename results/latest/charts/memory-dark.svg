@@ -6,7 +6,7 @@
 <text x="20" y="90" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#c3c2b7">1M rows</text>
 <text x="20" y="109.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#c3c2b7">Infinite Table</text>
 <path d="M172,98H312a4,4 0 0 1 4,4V108a4,4 0 0 1 -4,4H172Z" fill="#3987e5"/>
-<text x="324" y="109.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#f0efec">90.6 MB</text>
+<text x="324" y="109.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#f0efec">90.7 MB</text>
 <text x="20" y="127.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#c3c2b7">PrimeNG Table</text>
 <path d="M172,116H172a3.4,3.4 0 0 1 3.4,3.4V126.6a3.4,3.4 0 0 1 -3.4,3.4H172Z" fill="#d95926"/>
 <text x="183" y="127.5" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#f0efec">2.15 MB</text>
